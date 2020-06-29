@@ -50,3 +50,19 @@
 .register-container .content form .input-group input:last-child {
 	margin-left: 8px;
 }
+@media screen and (max-width: 900px) {
+	.register-container .content {
+		flex-direction: column;
+		text-align: center;
+		padding: 50px;
+	}
+	.register-container .content section {
+		max-width: 450px;
+	}
+	.register-container .content section h1 {
+		margin: 20px;
+	}
+	.back-link {
+		margin-bottom: 20px;
+	}
+}
