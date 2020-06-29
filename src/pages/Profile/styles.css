@@ -86,3 +86,27 @@
 	display: block;
 	margin-bottom: 20px;
 }
+@media screen and (max-width: 900px) {
+	.profile-container {
+		padding: 20px;
+	}
+	.profile-container header {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.profile-container header a {
+		margin-top: 20px;
+		width: 200px;
+		margin-left: 0;
+	}
+	.profile-container header button {
+		margin-top: 20px;
+	}
+	.profile-container header span {
+		font-size: 15px;
+		margin-left: 0;
+	}
+	.profile-container ul {
+		grid-template-columns: 1fr;
+	}
+}

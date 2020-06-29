@@ -18,7 +18,7 @@ export default function Profile() {
 					<FiPower size={18} color="#e02041" />
 				</button>
 			</header>
-			<h1>Casos cadastrados</h1>
+			<h1>Seus casos cadastrados</h1>
 
 			<ul>
 				<li>
