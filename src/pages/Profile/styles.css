@@ -3,6 +3,7 @@
 	max-width: 1180px;
 	min-height: 100vh;
 	margin: 32px auto;
+	animation: entrada-direita 0.5s;
 }
 .profile-container header {
 	display: flex;
