@@ -13,7 +13,7 @@ const Notify = (message, status, autoClose = true) => {
 			toast.success(message, toastConfig);
 			break;
 		case "error":
-			toast.warn(message, toastConfig);
+			toast.error(message, toastConfig);
 			break;
 		default:
 			toast(message, toastConfig);

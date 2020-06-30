@@ -17,6 +17,8 @@ export default function Register() {
 	const [city, setCity] = useState("");
 	const [uf, setUf] = useState("");
 	const [file, setFile] = useState("");
+	const [finish, setFinish] = useState(false);
+	const [ongId, setOngId] = useState("");
 
 	async function handleRegister(e) {
 		e.preventDefault();
@@ -28,86 +30,120 @@ export default function Register() {
 		formData.append("uf", uf);
 		formData.append("image", file);
 
-		try {
-			const response = await api.post("ongss", formData);
-			toast.Notify(`Seu ID de acesso: ${response.data.id}`, "success", false);
-		} catch (err) {
-			toast.Notify(`Tente novamente mais tarde`, "error");
+		if (
+			name === "" ||
+			email === "" ||
+			whatsapp === "" ||
+			city === "" ||
+			uf === "" ||
+			file === ""
+		) {
+			return toast.Notify(`Preencha todos os campos`, "error");
+		} else {
+			const fileName = file.name.split(".").pop();
+			console.log(fileName);
 		}
+
+		// try {
+		// 	const response = await api.post("ongs", formData);
+		// 	setOngId(response.data.id);
+		// 	setFinish(true);
+		// 	toast.Notify(`Cadastrado com sucesso`, "success");
+		// } catch (err) {
+		// 	toast.Notify(`Tente novamente mais tarde`, "error");
+		// }
 	}
 	const handleFile = (e) => {
-		//const fileName = e.target.value.split("\\").pop();
 		setFile(e.target.files[0]);
 		setFileMsg("Selecionado");
 	};
 	return (
 		<div className="register-container">
-			<div className="content">
-				<section>
-					<img src={logoImg} alt="Apoie uma ong" />
-					<h1>Cadastro</h1>
-					<p>
-						Faça seu cadastro e ajude as pessoas a encontrarem os casos da sua
-						ONG.
-					</p>
+			{!finish && (
+				<div className="content">
+					<section>
+						<img src={logoImg} alt="Apoie uma ong" />
+						<h1>Cadastro</h1>
+						<p>
+							Faça seu cadastro e ajude as pessoas a encontrarem os casos da sua
+							ONG.
+						</p>
 
-					<Link className="back-link" to="/">
-						<FiArrowLeft siz={16} color="#E02041" />
-						Já tenho cadastro
-					</Link>
-				</section>
-				<form autoComplete="off" onSubmit={handleRegister}>
-					<input
-						type="text"
-						placeholder="Nome da ONG"
-						autocomplete="ffds"
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-					/>
-					<input
-						type="email"
-						placeholder="Email"
-						autocomplete="ffds"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<input
-						type="phone"
-						placeholder="Whatsapp"
-						autocomplete="ffds"
-						value={whatsapp}
-						onChange={(e) => setWhats(e.target.value)}
-					/>
-					<div className="input-group">
+						<Link className="back-link" to="/">
+							<FiArrowLeft siz={16} color="#E02041" />
+							Já tenho cadastro
+						</Link>
+					</section>
+					<form autoComplete="off" onSubmit={handleRegister}>
 						<input
 							type="text"
-							placeholder="Cidade"
+							placeholder="Nome da ONG"
 							autocomplete="ffds"
-							value={city}
-							onChange={(e) => setCity(e.target.value)}
+							value={name}
+							onChange={(e) => setName(e.target.value)}
 						/>
 						<input
-							type="text"
-							placeholder="UF"
-							style={{ width: "80px" }}
+							type="email"
+							placeholder="Email"
 							autocomplete="ffds"
-							value={uf}
-							onChange={(e) => setUf(e.target.value.toUpperCase())}
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
 						/>
-					</div>
-					<input
-						id="file"
-						className="inputfile"
-						type="file"
-						onChange={(e) => handleFile(e)}
-					/>
-					<label for="file">{fileMsg}</label>
+						<input
+							type="phone"
+							placeholder="Whatsapp"
+							autocomplete="ffds"
+							value={whatsapp}
+							onChange={(e) => setWhats(e.target.value)}
+						/>
+						<div className="input-group">
+							<input
+								type="text"
+								placeholder="Cidade"
+								autocomplete="ffds"
+								value={city}
+								onChange={(e) => setCity(e.target.value)}
+							/>
+							<input
+								type="text"
+								placeholder="UF"
+								style={{ width: "80px" }}
+								autocomplete="ffds"
+								value={uf}
+								onChange={(e) => setUf(e.target.value.toUpperCase())}
+							/>
+						</div>
+						<input
+							id="file"
+							className="inputfile"
+							type="file"
+							onChange={(e) => handleFile(e)}
+						/>
+						<label for="file">{fileMsg}</label>
 
-					<button type="submit" className="button">
-						Cadastrar
-					</button>
-				</form>
-			</div>
+						<button type="submit" className="button">
+							Cadastrar
+						</button>
+					</form>
+				</div>
+			)}
+			{finish && (
+				<div className="content">
+					<section>
+						<img src={logoImg} alt="Apoie uma ong" />
+						<h1>Seu ID é: {ongId}</h1>
+						<p>
+							Olá {name}, guarde o seu ID em local seguro para acessar a
+							plataforma quando desejar.
+						</p>
+
+						<Link className="back-link" to="/">
+							<FiArrowLeft siz={16} color="#E02041" />
+							Acessar
+						</Link>
+					</section>
+				</div>
+			)}
 			<toast.ContainerNotify />
 		</div>
 	);
