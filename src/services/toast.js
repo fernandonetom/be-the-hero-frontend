@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./toast.css";
 
-const Notify = (message, status, autoClose = true) => {
+const Notify = (message, status, autoClose = 4000) => {
 	const toastConfig = {
 		position: toast.POSITION.BOTTOM_CENTER,
 		autoClose: autoClose,
