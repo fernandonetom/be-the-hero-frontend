@@ -9,7 +9,7 @@ export default function NewIncident() {
 
 	const handleFile = (e) => {
 		const fileName = e.target.value.split("\\").pop();
-		setFileMsg(fileName + " selecionado");
+		setFileMsg("Selecionado");
 	};
 
 	return (

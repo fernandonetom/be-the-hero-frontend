@@ -3,13 +3,42 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
+import api from "../../services/api";
+import toast from "../../services/toast";
+
+import { ToastContainer } from "react-toastify";
+
 import logoImg from "../../assets/logo.png";
 export default function Register() {
 	const [fileMsg, setFileMsg] = useState("Imagem de perfil");
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [whatsapp, setWhats] = useState("");
+	const [city, setCity] = useState("");
+	const [uf, setUf] = useState("");
+	const [file, setFile] = useState("");
 
+	async function handleRegister(e) {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append("name", name);
+		formData.append("email", email);
+		formData.append("whatsapp", whatsapp);
+		formData.append("city", city);
+		formData.append("uf", uf);
+		formData.append("image", file);
+
+		try {
+			const response = await api.post("ongss", formData);
+			toast.Notify(`Seu ID de acesso: ${response.data.id}`, "success", false);
+		} catch (err) {
+			toast.Notify(`Tente novamente mais tarde`, "error");
+		}
+	}
 	const handleFile = (e) => {
-		const fileName = e.target.value.split("\\").pop();
-		setFileMsg(fileName + " selecionado");
+		//const fileName = e.target.value.split("\\").pop();
+		setFile(e.target.files[0]);
+		setFileMsg("Selecionado");
 	};
 	return (
 		<div className="register-container">
@@ -27,17 +56,43 @@ export default function Register() {
 						Já tenho cadastro
 					</Link>
 				</section>
-				<form autoComplete="off">
-					<input type="text" placeholder="Nome da ONG" autocomplete="ffds" />
-					<input type="email" placeholder="Email" autocomplete="ffds" />
-					<input type="phone" placeholder="Whatsapp" autocomplete="ffds" />
+				<form autoComplete="off" onSubmit={handleRegister}>
+					<input
+						type="text"
+						placeholder="Nome da ONG"
+						autocomplete="ffds"
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+					/>
+					<input
+						type="email"
+						placeholder="Email"
+						autocomplete="ffds"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
+					<input
+						type="phone"
+						placeholder="Whatsapp"
+						autocomplete="ffds"
+						value={whatsapp}
+						onChange={(e) => setWhats(e.target.value)}
+					/>
 					<div className="input-group">
-						<input type="text" placeholder="Cidade" autocomplete="ffds" />
+						<input
+							type="text"
+							placeholder="Cidade"
+							autocomplete="ffds"
+							value={city}
+							onChange={(e) => setCity(e.target.value)}
+						/>
 						<input
 							type="text"
 							placeholder="UF"
 							style={{ width: "80px" }}
 							autocomplete="ffds"
+							value={uf}
+							onChange={(e) => setUf(e.target.value.toUpperCase())}
 						/>
 					</div>
 					<input
@@ -53,6 +108,7 @@ export default function Register() {
 					</button>
 				</form>
 			</div>
+			<toast.ContainerNotify />
 		</div>
 	);
 }

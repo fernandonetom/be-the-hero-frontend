@@ -1,0 +1,8 @@
+@media screen and (max-width: 900px) {
+	.toast {
+		width: 250px;
+		left: 50%;
+		margin-left: -125px;
+		top: 5vh;
+	}
+}
