@@ -6,8 +6,6 @@ import { FiArrowLeft } from "react-icons/fi";
 import api from "../../services/api";
 import toast from "../../services/toast";
 
-import { ToastContainer } from "react-toastify";
-
 import logoImg from "../../assets/logo.png";
 export default function Register() {
 	const [fileMsg, setFileMsg] = useState("Imagem de perfil");
@@ -44,14 +42,14 @@ export default function Register() {
 			console.log(fileName);
 		}
 
-		// try {
-		// 	const response = await api.post("ongs", formData);
-		// 	setOngId(response.data.id);
-		// 	setFinish(true);
-		// 	toast.Notify(`Cadastrado com sucesso`, "success");
-		// } catch (err) {
-		// 	toast.Notify(`Tente novamente mais tarde`, "error");
-		// }
+		try {
+			const response = await api.post("ongs", formData);
+			setOngId(response.data.id);
+			setFinish(true);
+			toast.Notify(`Cadastrado com sucesso`, "success");
+		} catch (err) {
+			toast.Notify(`Tente novamente mais tarde`, "error");
+		}
 	}
 	const handleFile = (e) => {
 		setFile(e.target.files[0]);
