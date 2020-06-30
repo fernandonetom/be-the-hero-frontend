@@ -38,8 +38,10 @@ export default function Register() {
 		) {
 			return toast.Notify(`Preencha todos os campos`, "error");
 		} else {
+			const allowedExtensions = ["jpg", "png", "jpeg", "gif"];
 			const fileName = file.name.split(".").pop();
-			console.log(fileName);
+			if (!allowedExtensions.includes(fileName))
+				return toast.Notify("Arquivo não permitido", "error");
 		}
 
 		try {
