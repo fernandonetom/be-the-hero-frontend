@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
 import logoImg from "../../assets/logo.png";
 export default function Register() {
+	const [fileMsg, setFileMsg] = useState("Imagem de perfil");
+
+	const handleFile = (e) => {
+		const fileName = e.target.value.split("\\").pop();
+		setFileMsg(fileName + " selecionado");
+	};
 	return (
 		<div className="register-container">
 			<div className="content">
@@ -34,6 +40,14 @@ export default function Register() {
 							autocomplete="ffds"
 						/>
 					</div>
+					<input
+						id="file"
+						className="inputfile"
+						type="file"
+						onChange={(e) => handleFile(e)}
+					/>
+					<label for="file">{fileMsg}</label>
+
 					<button type="submit" className="button">
 						Cadastrar
 					</button>

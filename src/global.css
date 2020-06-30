@@ -80,11 +80,25 @@ form input:focus {
 	background-color: #fff;
 	font: 400 18px Roboto, sans-serif;
 	line-height: 60px;
-	text-align: center;
+	text-align: left;
 	vertical-align: middle;
 	outline: 0;
+	position: relative;
 }
-
+.inputfile + label::before {
+	content: "UPLOAD";
+	position: absolute;
+	top: 25%;
+	right: 10px;
+	font-size: 10px;
+	background-color: #00ff88;
+	width: 60px;
+	height: 30px;
+	line-height: 30px;
+	vertical-align: middle;
+	border-radius: 10px;
+	text-align: center;
+}
 .inputfile:focus + label,
 .inputfile + label:hover {
 	border: 1px solid #e02041;
