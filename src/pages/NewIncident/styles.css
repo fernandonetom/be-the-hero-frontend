@@ -42,7 +42,8 @@
 	animation-fill-mode: backwards;
 }
 .new-incident .content form input,
-.new-incident .content form textarea {
+.new-incident .content form textarea,
+.new-incident .content form .inputfile + label {
 	margin-top: 8px;
 }
 @media screen and (max-width: 900px) {

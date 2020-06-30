@@ -59,6 +59,42 @@ form input:focus {
 	filter: brightness(80%);
 }
 
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+	width: 100%;
+	height: 60px;
+	color: #737380;
+	border: 1px solid #dcdce6;
+	border-radius: 8px;
+	padding: 0 24px;
+	transition: all 0.3s ease-in-out;
+	display: inline-block;
+	background-color: #fff;
+	font: 400 18px Roboto, sans-serif;
+	line-height: 60px;
+	text-align: center;
+	vertical-align: middle;
+	outline: 0;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+	border: 1px solid #e02041;
+}
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+.inputfile + label * {
+	pointer-events: none;
+}
 @keyframes entrada-fade {
 	0% {
 		opacity: 0;
