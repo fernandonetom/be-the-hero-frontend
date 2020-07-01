@@ -32,6 +32,7 @@ export default function Profile() {
 				.then((response) => {
 					setIncidents(response.data);
 					setLoaded(true);
+					console.log(response.data);
 				})
 				.catch((err) => {
 					toast.Notify("Tente novamente mais tarde", "error");
@@ -40,8 +41,17 @@ export default function Profile() {
 	}, []);
 
 	function handleInfo(index) {
-		setPopupData(incidents[index]);
-		setPopup(true);
+		trackPromise(
+			api
+				.get(`ongs/${incidents[index].ong_id}`)
+				.then((response) => {
+					setPopupData(response.data);
+					setPopup(true);
+				})
+				.catch((err) => {
+					toast.Notify("Tente novamente mais tarde", "error");
+				})
+		);
 	}
 
 	return (
@@ -107,7 +117,7 @@ export default function Profile() {
 						<div className="header">
 							<div className="image">
 								<img
-									src={baseUrl + "/public/uploads/incidents/" + popupData.image}
+									src={baseUrl + "/public/uploads/ongs/" + popupData.image}
 									alt=""
 								/>
 							</div>
