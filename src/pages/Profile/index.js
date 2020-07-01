@@ -17,7 +17,10 @@ export default function Profile() {
 	const history = useHistory();
 	const ongName = localStorage.getItem("ongName");
 	const ongId = localStorage.getItem("ongId");
-
+	const baseUrl =
+		process.env.REACT_APP_ENV === "DEV"
+			? process.env.REACT_APP_URL_LOCAL
+			: process.env.REACT_APP_BASE_URL;
 	useEffect(() => {
 		if (!Validation.isLogged()) return history.replace("/");
 
@@ -35,7 +38,7 @@ export default function Profile() {
 				toast.Notify("Tente novamente mais tarde", "error");
 				setTimeout(() => history.replace("/"), 4000);
 			});
-	}, [ongId]);
+	}, [history, ongId]);
 
 	function handleLogout() {
 		localStorage.clear();
@@ -99,9 +102,7 @@ export default function Profile() {
 								<div className="img-cover">
 									<img
 										src={
-											process.env.REACT_APP_BASE_URL +
-											"/public/uploads/incidents/" +
-											incident.image
+											baseUrl + "/public/uploads/incidents/" + incident.image
 										}
 										alt=""
 									/>

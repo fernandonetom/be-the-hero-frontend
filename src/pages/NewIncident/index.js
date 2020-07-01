@@ -20,7 +20,7 @@ export default function NewIncident() {
 
 	useEffect(() => {
 		if (!Validation.isLogged()) return history.replace("/");
-	}, [ongId]);
+	}, [history, ongId]);
 	const handleFile = (e) => {
 		setFileMsg("Selecionado");
 		setFile(e.target.files[0]);
