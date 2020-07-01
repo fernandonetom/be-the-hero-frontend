@@ -5,6 +5,7 @@
 	margin: 32px auto;
 	animation: entrada-direita 0.5s;
 }
+
 .home-container header {
 	display: flex;
 	align-items: center;

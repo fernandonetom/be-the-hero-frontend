@@ -3,6 +3,9 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
 
+import { trackPromise } from "react-promise-tracker";
+import Spinner from "../../common/spinner";
+
 import api from "../../services/api";
 import toast from "../../services/toast";
 
@@ -12,21 +15,25 @@ import ReactTooltip from "react-tooltip";
 
 export default function Profile() {
 	const [incidents, setIncidents] = useState([]);
+	const [loaded, setLoaded] = useState(false);
 	const baseUrl =
 		process.env.REACT_APP_ENV === "DEV"
 			? process.env.REACT_APP_URL_LOCAL
 			: process.env.REACT_APP_BASE_URL;
 
 	useEffect(() => {
-		api
-			.get("incidents")
-			.then((response) => {
-				console.log(response.data);
-				setIncidents(response.data);
-			})
-			.catch((err) => {
-				toast.Notify("Tente novamente mais tarde", "error");
-			});
+		trackPromise(
+			api
+				.get("incidents")
+				.then((response) => {
+					console.log(response.data);
+					setIncidents(response.data);
+					setLoaded(true);
+				})
+				.catch((err) => {
+					toast.Notify("Tente novamente mais tarde", "error");
+				})
+		);
 	}, []);
 
 	return (
@@ -78,9 +85,10 @@ export default function Profile() {
 					</ul>
 				</>
 			)}
-			{incidents.length === 0 && (
+			{loaded && incidents === 0 && (
 				<h1>Não encontramos nenhum caso cadastrado :(</h1>
 			)}
+			<Spinner />
 			<ReactTooltip />
 			<toast.ContainerNotify />
 		</div>

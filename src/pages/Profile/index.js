@@ -7,12 +7,16 @@ import Validation from "../../services/validation";
 import api from "../../services/api";
 import toast from "../../services/toast";
 
+import { trackPromise } from "react-promise-tracker";
+import Spinner from "../../common/spinner";
+
 import logoImg from "../../assets/logo.png";
 
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css";
 export default function Profile() {
 	const [incidents, setIncidents] = useState([]);
+	const [loaded, setLoaded] = useState(false);
 
 	const history = useHistory();
 	const ongName = localStorage.getItem("ongName");
@@ -23,21 +27,23 @@ export default function Profile() {
 			: process.env.REACT_APP_BASE_URL;
 	useEffect(() => {
 		if (!Validation.isLogged()) return history.replace("/");
-
-		api
-			.get("profile", {
-				headers: {
-					Authorization: ongId,
-				},
-			})
-			.then((response) => {
-				console.log(response.data);
-				setIncidents(response.data);
-			})
-			.catch((err) => {
-				toast.Notify("Tente novamente mais tarde", "error");
-				setTimeout(() => history.replace("/"), 4000);
-			});
+		trackPromise(
+			api
+				.get("profile", {
+					headers: {
+						Authorization: ongId,
+					},
+				})
+				.then((response) => {
+					console.log(response.data);
+					setIncidents(response.data);
+					setLoaded(true);
+				})
+				.catch((err) => {
+					toast.Notify("Tente novamente mais tarde", "error");
+					setTimeout(() => history.replace("/"), 4000);
+				})
+		);
 	}, [history, ongId]);
 
 	function handleLogout() {
@@ -134,7 +140,10 @@ export default function Profile() {
 					</ul>
 				</>
 			)}
-			{incidents.length === 0 && <h1>Você ainda não cadastrou um caso</h1>}
+			<Spinner />
+			{loaded && incidents.length === 0 && (
+				<h1>Você ainda não cadastrou um caso</h1>
+			)}
 			<toast.ContainerNotify />
 		</div>
 	);
