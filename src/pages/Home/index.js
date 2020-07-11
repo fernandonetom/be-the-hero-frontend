@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
-import { FiLogIn, FiMail, FiPhoneCall, FiXSquare } from "react-icons/fi";
+import {
+	FiLogIn,
+	FiMail,
+	FiPhoneCall,
+	FiXSquare,
+	FiPlus,
+} from "react-icons/fi";
 
 import { trackPromise } from "react-promise-tracker";
 import Spinner from "../../common/spinner";
@@ -19,26 +25,44 @@ export default function Profile() {
 	const [loaded, setLoaded] = useState(false);
 	const [popup, setPopup] = useState(false);
 	const [popupData, setPopupData] = useState([]);
-
-	const baseUrl =
-		process.env.REACT_APP_ENV === "DEV"
-			? process.env.REACT_APP_URL_LOCAL
-			: process.env.REACT_APP_BASE_URL;
+	const [page, setPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(0);
+	const [loadedAll, setLoadedAll] = useState(false);
 
 	useEffect(() => {
+		getIncidents();
+	}, []);
+
+	function getIncidents(page = 1) {
 		trackPromise(
 			api
-				.get("incidents")
+				.get(`incidents?page=${page}`)
 				.then((response) => {
-					setIncidents(response.data);
 					setLoaded(true);
-					console.log(response.data);
+					if (response.data.message) {
+						toast.Notify(response.data.message, "error");
+						return;
+					}
+					setIncidents([...incidents, ...response.data]);
+					setTotalPages(Math.ceil(response.headers["x-total-count"] / 6));
 				})
 				.catch((err) => {
 					toast.Notify("Tente novamente mais tarde", "error");
 				})
 		);
-	}, []);
+	}
+
+	function loadMore() {
+		if (page < totalPages) {
+			console.log("foi");
+			getIncidents(page + 1);
+			if (page + 1 === totalPages) {
+				setLoadedAll(true);
+				toast.Notify("Já mostramos todos os casos :)", "success");
+			}
+			setPage(page + 1);
+		}
+	}
 
 	function handleInfo(index) {
 		trackPromise(
@@ -85,7 +109,9 @@ export default function Profile() {
 										alt={incident.title}
 										effect="blur"
 										src={
-											baseUrl + "/public/uploads/incidents/" + incident.image
+											process.env.REACT_APP_GCLOUD_URL +
+											incident.image +
+											"?alt=media"
 										}
 									/>
 								</div>
@@ -108,8 +134,14 @@ export default function Profile() {
 					</ul>
 				</>
 			)}
-			{loaded && incidents === 0 && (
+			{loaded && incidents.length === 0 && (
 				<h1>Não encontramos nenhum caso cadastrado :(</h1>
+			)}
+			{!loadedAll && (
+				<button className="load-more" onClick={loadMore}>
+					<FiPlus size={20} />
+					mostrar mais
+				</button>
 			)}
 			{popup && (
 				<div id="popupBody" className="popupInfo">
@@ -117,7 +149,11 @@ export default function Profile() {
 						<div className="header">
 							<div className="image">
 								<img
-									src={baseUrl + "/public/uploads/ongs/" + popupData.image}
+									src={
+										process.env.REACT_APP_GCLOUD_URL +
+										popupData.image +
+										"?alt=media"
+									}
 									alt=""
 								/>
 							</div>
