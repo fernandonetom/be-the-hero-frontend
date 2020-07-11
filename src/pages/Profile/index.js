@@ -108,7 +108,9 @@ export default function Profile() {
 								<div className="img-cover">
 									<img
 										src={
-											baseUrl + "/public/uploads/incidents/" + incident.image
+											process.env.REACT_APP_GCLOUD_URL +
+											incident.image +
+											"?alt=media"
 										}
 										alt=""
 									/>
