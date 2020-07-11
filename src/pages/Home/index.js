@@ -137,7 +137,7 @@ export default function Profile() {
 			{loaded && incidents.length === 0 && (
 				<h1>Não encontramos nenhum caso cadastrado :(</h1>
 			)}
-			{!loadedAll && (
+			{!loadedAll && loaded && incidents.length !== 0 && totalPages !== 1 && (
 				<button className="load-more" onClick={loadMore}>
 					<FiPlus size={20} />
 					mostrar mais
