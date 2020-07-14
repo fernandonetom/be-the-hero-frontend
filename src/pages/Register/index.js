@@ -40,6 +40,9 @@ export default function Register() {
 		) {
 			return toast.Notify(`Preencha todos os campos`, "error");
 		} else {
+			if (whatsapp.length !== 15) {
+				return toast.Notify(`Preencha o Whatsapp com o 9`, "error");
+			}
 			const allowedExtensions = ["jpg", "png", "jpeg", "gif"];
 			const fileName = file.name.split(".").pop();
 			if (!allowedExtensions.includes(fileName))

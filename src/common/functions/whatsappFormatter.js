@@ -4,7 +4,6 @@ const whatsappFormatter = (number) => {
 	newNumber = newNumber.replace(/(\d{2})(\d)/, "($1) $2");
 	newNumber = newNumber.replace(/(\d{5})(\d)/, "$1-$2");
 	newNumber = newNumber.replace(/(-\d{4})\d+?$/, "$1");
-
 	return newNumber;
 };
 export default whatsappFormatter;
