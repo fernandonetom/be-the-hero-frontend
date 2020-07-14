@@ -6,6 +6,8 @@ import { FiArrowLeft } from "react-icons/fi";
 import api from "../../services/api";
 import toast from "../../services/toast";
 
+import whatsappFormatter from "../../common/functions/whatsappFormatter";
+
 import logoImg from "../../assets/logo.png";
 export default function Register() {
 	const [fileMsg, setFileMsg] = useState("Imagem de perfil");
@@ -94,7 +96,7 @@ export default function Register() {
 							placeholder="Whatsapp"
 							autocomplete="ffds"
 							value={whatsapp}
-							onChange={(e) => setWhats(e.target.value)}
+							onChange={(e) => setWhats(whatsappFormatter(e.target.value))}
 						/>
 						<div className="input-group">
 							<input
