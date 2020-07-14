@@ -5,6 +5,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import Validation from "../../services/validation";
 import api from "../../services/api";
 import toast from "../../services/toast";
+import currencyFormatter from "../../common/functions/currencyFormatter";
 
 import logoImg from "../../assets/logo.png";
 export default function NewIncident() {
@@ -96,7 +97,7 @@ export default function NewIncident() {
 						placeholder="Valor em reais"
 						autoComplete="ffds"
 						value={value}
-						onChange={(e) => setValue(e.target.value)}
+						onChange={(e) => setValue(currencyFormatter(e.target.value))}
 					/>
 					<input
 						id="file"
