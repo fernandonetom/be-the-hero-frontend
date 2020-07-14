@@ -9,7 +9,7 @@ import currencyFormatter from "../../common/functions/currencyFormatter";
 
 import logoImg from "../../assets/logo.png";
 export default function NewIncident() {
-	const [fileMsg, setFileMsg] = useState("Imagem de perfil");
+	const [fileMsg, setFileMsg] = useState("Imagem do caso");
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [value, setValue] = useState("");

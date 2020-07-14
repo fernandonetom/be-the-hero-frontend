@@ -74,7 +74,7 @@ export default function Register() {
 							ONG.
 						</p>
 
-						<Link className="back-link" to="/">
+						<Link className="back-link" to="/login">
 							<FiArrowLeft siz={16} color="#E02041" />
 							Já tenho cadastro
 						</Link>
