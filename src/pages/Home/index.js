@@ -183,7 +183,10 @@ export default function Profile() {
 								<FiMail size={18} color="#e02041" /> {popupData.email}
 							</p>
 							<p>
-								<FiPhoneCall size={18} color="#128C7E" /> {popupData.whatsapp}
+								<FiPhoneCall size={18} color="#128C7E" />{" "}
+								{popupData.whatsapp
+									.toString()
+									.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}
 							</p>
 							<div className="contato">
 								<a href={"mailto:" + popupData.email} className="email">
